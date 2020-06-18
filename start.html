@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>webPages Compiler</title>
+		<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/element-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.min.css"/>
+		<script src="./js/element-ui.collapse-transition.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
+		<style type="text/css">
+			div{
+				border-radius: 12px 12px 12px 12px;
+				opacity:1.0;
+			}
+			body{
+				background-color:rgba(0, 0, 0, 0.0);  
+			}
+			.czbtn{
+				width:8px;
+				height:8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<el-collapse-transition>
+				<div v-if="show">
+					<div id="">
+						<el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
+						<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()"></el-button>
+						<el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()"></el-button>
+						webPages Compiler by 7086cmd
+					</div>
+					<h2 style="text-align: center;">{{text+slh}}</h2>
+					<div id="">
+						<el-row>
+							<el-col :span="2"><p>    </p></el-col>
+							<el-col :span="8">
+								<el-card class="box-card" shadow="hover" v-on:click="editMode()">
+									<div slot="header" class="clearfix">
+										<el-button type="text" plain style="font-size: 16x;" v-on:click="editMode()">进入编辑模式</el-button>
+									</div>
+									<div class="text item">
+										在这里，编辑您的webPages页面。
+									</div>
+								</el-card>
+							</el-col>
+							<el-col :span="2"><p>    </p></el-col>
+							<el-col :span="8">
+								<el-card class="box-card" shadow="hover" v-on:click="changeMode()">
+									<div slot="header" class="clearfix">
+										<el-button type="text" plain style="font-size: 16x;" v-on:click="changeMode()">进入转换模式</el-button>
+									</div>
+									<div class="text item">
+										在这里，转换您的webPages页面。
+									</div>
+								</el-card>
+							</el-col>
+						</el-row>
+					</div>
+					<br>
+				</div>
+			</el-collapse-transition>
+		</div>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:"#app",
+				data(){
+					return{
+						text:"请选择模式",
+						slh:"",
+						max:false,
+						show:true
+					}
+				},
+				methods:{
+					closeWindow:function(){
+						require('electron').ipcRenderer.send('closeWindow');
+					},
+					minWindow:function(){
+						require('electron').ipcRenderer.send('minWindow');
+					},
+					editMode:function(){
+						this.show=false;
+						require('electron').ipcRenderer.send('editMode');
+					},
+					changeMode:function(){
+						this.show=false;
+						require('electron').ipcRenderer.send('changeMode');
+					},
+					maxWindow:function(){
+						require('electron').ipcRenderer.send('maxWindow');
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

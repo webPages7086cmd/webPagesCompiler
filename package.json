@@ -1,0 +1,64 @@
+{
+	"name": "webpagescompiler",
+	"version": "1.0.0",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error:no test specified\" && exit 1",
+		"dev": "electron main.js",
+		"buildwinx64": "electron-builder --win --x64",
+		"buildwinia32": "electron-builder --win --ia32",
+		"buildwinarm64": "electron-builder --win --arm64",
+		"buildmac": "electron-builder --mac",
+		"buildlinuxx64": "electron-builder --linux --x64",
+		"buildlinuxia32": "electron-builder --linux --ia32",
+		"buildlinuxarm64": "electron-builder --linux --arm64",
+		"buildlinuxarmv7l": "electron-builder --linux --armv7l"
+	},
+	"build": {
+		"productName": "webPagesCompiler",
+		"appId": "com.webpages.compiler",
+		"copyright": "made by 7086cmd. The Open Source Project.",
+		"directions": {
+			"output": "./dist"
+		},
+		"win": {
+			"icon": "./icon.ico",
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"ia32",
+						"x64",
+						"arm64"
+					]
+				}
+			]
+		},
+		"mac": {
+			"icon": "./icon.icns"
+		},
+		"dmg": {
+			"contents": [
+				{
+					"x": 410,
+					"y": 150,
+					"type": "link",
+					"path": "./Applications"
+				},
+				{
+					"x": 130,
+					"y": 150,
+					"type": "file"
+				}
+			]
+		},
+		"linux": {
+			"icon": "./icon"
+		}
+	},
+	"author": "7086cmd",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.17.1"
+	}
+}
