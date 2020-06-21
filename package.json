@@ -59,6 +59,7 @@
 	"author": "7086cmd",
 	"license": "MIT",
 	"dependencies": {
-		"express": "^4.17.1"
+		"express": "^4.17.1",
+		"electron": "9.0.4"
 	}
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>About webPages Compiler</title>
+		<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/element-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.min.css"/>
+		<script src="./js/element-ui.collapse-transition.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
+		<style type="text/css">
+			body{
+				background-color: RGBA(0,0,0,0);
+			}
+			div{
+				border-radius: 12px 12px 12px 12px;
+				opacity:1.0;
+				background-color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
+			<!-- <el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()"></el-button> -->
+			<!-- <el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()"></el-button> -->
+			About webPages Compiler by 7086cmd
+			<div style="text-align: center;">
+				<h2>About webPages Compiler</h2><br><br>
+				<p>这是一款用来使用webPages制作网页的软件。至于如何使用webPages，请访问：<el-link type="primary" style="font-size: 16px;" href="https://webPages7086cmd.github.io" target="_blank" >https://webPages7086cmd.github.io</el-link></p>
+				<br><br>
+				<p style="text-align: right;">Copyright &copy; 2020 7086cmd</p>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:"#app",
+				data(){
+					return{
+						
+					}
+				},
+				methods:{					
+					closeWindow:function(){
+						require('electron').ipcRenderer.send('closeAboutWindow');
+					},
+					minWindow:function(){
+						require('electron').ipcRenderer.send('minWindow');
+					},
+					editMode:function(){
+						this.show=false;
+						require('electron').ipcRenderer.send('editMode');
+					},
+					changeMode:function(){
+						this.show=false;
+						require('electron').ipcRenderer.send('changeMode');
+					},
+					maxWindow:function(){
+						require('electron').ipcRenderer.send('maxWindow');
+					},
+					About:function(){
+						require('electron').ipcRenderer.send('about');
+					}
+					
+				}
+			});
+		</script>
+	</body>
+</html>

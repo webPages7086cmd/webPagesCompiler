@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>webPages Compiler</title>
+		<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/element-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.min.css"/>
+		<script src="./js/element-ui.collapse-transition.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
+		<style type="text/css">
+			div{
+				border-radius: 12px 12px 12px 12px;
+				opacity:1.0;
+				background-color: white;
+			}
+			body{
+				background-color:rgba(0, 0, 0, 0.0);  
+			}
+			.czbtn{
+				width:8px;
+				height:8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="About()">
+				<el-menu-item index="0">webPages Compiler</el-menu-item>
+				<el-submenu index="1">
+					<template slot="title">文件</template>
+					<el-menu-item index="2-1" @select="About()">关于</el-menu-item>
+				</el-submenu>
+			</el-menu>
+		</div>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:"#app",
+				data(){
+					return{
+						activeIndex: '1'
+					}
+				},
+				methods:{
+					About:function(){
+						require('electron').ipcRenderer.send('about');
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

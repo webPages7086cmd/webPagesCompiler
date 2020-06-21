@@ -13,6 +13,7 @@
 			div{
 				border-radius: 12px 12px 12px 12px;
 				opacity:1.0;
+				background-color: white;
 			}
 			body{
 				background-color:rgba(0, 0, 0, 0.0);  
@@ -30,8 +31,8 @@
 					<div id="">
 						<el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
 						<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()"></el-button>
-						<el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()"></el-button>
-						webPages Compiler by 7086cmd
+						<!-- <el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()"></el-button> -->
+						<span>webPages Compiler by 7086cmd</span> 
 					</div>
 					<h2 style="text-align: center;">{{text+slh}}</h2>
 					<div id="">
@@ -69,6 +70,7 @@
 				el:"#app",
 				data(){
 					return{
+						activeIndex: '1',
 						text:"请选择模式",
 						slh:"",
 						max:false,
@@ -92,6 +94,9 @@
 					},
 					maxWindow:function(){
 						require('electron').ipcRenderer.send('maxWindow');
+					},
+					About:function(){
+						require('electron').ipcRenderer.send('about');
 					}
 				}
 			});
