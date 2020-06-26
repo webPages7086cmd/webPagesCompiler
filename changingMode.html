@@ -1,11 +1,167 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title></title>
+		<meta charset="utf-8">
+		<title>webPages Compiler</title>
+		<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/element-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.min.css"/>
+		<script src="./js/element-ui.collapse-transition.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/prism.css"/>
+		<script src="./js/prism.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./sendmsg.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			
+			#app{
+				border-radius: 12px 12px 12px 12px;
+				box-shadow:2px 2px 5px #333333;
+				opacity:1.0;
+				background-color: white;
+			}
+			body{
+				font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+				background-color:rgba(0, 0, 0, 0.0);  
+			}
+			.czbtn{
+				width:8px;
+				height:8px;
+			}
+		</style>
 	</head>
 	<body>
-		
+		<div id="app">
+			<el-collapse-transition>
+				<div>
+					<div id="">
+						<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
+						<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()" plain ></el-button>
+						<el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()" plain ></el-button>
+						<span>webPages Compiler by 7086cmd</span> 
+					</div>
+					<h1 style="text-align: center;">Changing Mode</h1>
+					<el-row>
+						<el-col :span="2">
+							<p>    </p>
+						</el-col>
+						<el-col :span="8">
+							<transition name="el-fade-in">
+								<pre v-show="show2"><code id="yuanCode" class="language-html">{{fileNr}}</code></pre>
+							</transition>
+						</el-col>
+						<el-col :span="4" v-html="cgeBtnHTML"></el-col>
+						<el-col :span="8">
+							<transition name="el-fade-in">
+								<pre v-show="show"><code class="language-html">{{documentLast}}</code></pre>
+							</transition>
+							<!-- <el-button v-show="show" type="primary" v-on:click="openSave">打开保存选项</el-button> -->
+						</el-col>
+					</el-row>
+				</div>
+				<br><br>
+			</el-collapse-transition>
+		</div>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:"#app",
+				data(){
+					return{
+						fileNr:"",
+						cgeBtnHTML:'',
+						documentLast:'',
+						fal:false,
+						show:false,
+						show2:false
+					}
+				},
+				methods:{
+					closeWindow:function(){
+						require('electron').ipcRenderer.send('closeChangeWindow');
+					},
+					minWindow:function(){
+						require('electron').ipcRenderer.send('minChangeWindow');
+					},
+					maxWindow:function(){
+						require('electron').ipcRenderer.send('maxChangeWindow');
+					},
+					openSave:function(){
+					}
+				}
+			});
+			var neiRong=null;
+			const fs=require('fs');
+			const {ipcRenderer}=require('electron');
+			const beginDoc=fs.readFileSync('./begin.txt','utf-8');
+			const beginHTM=fs.readFileSync('./begin2.txt','utf-8');
+			const endDoc=fs.readFileSync('./end2.txt','utf-8');
+			const endHTM=fs.readFileSync('./end.txt','utf-8');
+			console.log(beginDoc);
+			console.log(beginHTM);
+			console.log(endDoc);
+			console.log(endHTM);
+			ipcRenderer.on('read',(event,args)=>{
+				vm.$data.fileNr=args;
+				neiRong=args;
+				console.log('getBtn&log Height!');
+				var len=args.split('\n').length;
+				console.log('getBtn&log Height!');
+				vm.$data.cgeBtnHTML='';
+				for(var i=1;i*2<len;i++){
+					vm.$data.cgeBtnHTML+='<br>';
+				}
+				vm.$data.cgeBtnHTML+='<button onclick="change()" type="button" class="el-button el-button--primary is-plain">转换<i class="el-icon-arrow-right"></i></button>';
+				vm.$data.show2=true;
+			});
+			function change(){
+				vm.$data.show=false;
+				vm.$data.documentLast='';
+				vm.$data.documentLast='<!DOCTYPE html>\n<html>\n	<head>\n';
+				console.log('true');
+				var nnr=vm.$data.fileNr;
+				var sets=nnr.split('</set>');
+				var setslen=String(sets[0]).split('\n');
+				for(var i=2;i<=setslen.length;i++){
+					vm.$data.documentLast+='	'+setslen[i]+'\n';
+				}
+				var styletemp=nnr.split('<style>');
+				var styletemp2=String(styletemp[1]).split('</style>');
+				var styles=styletemp2[0];
+				var styleslen=String(styles).split('\n');
+				var emm=String(vm.$data.documentLast).split('	\n	undefined\n');
+				vm.$data.documentLast=emm[0];
+				vm.$data.documentLast+='		<style type="text/css">';
+				for(var i=0;i<=styleslen.length;i++){
+					vm.$data.documentLast+='		'+styleslen[i]+'\n';
+				}
+				emm=String(vm.$data.documentLast).split('		\n		undefined\n');
+				vm.$data.documentLast=emm[0];
+				vm.$data.documentLast+='		</style>\n	</head>\n	<body>';
+				var templatetemp=nnr.split('<template>');
+				var templatetemp2=String(templatetemp[1]).split('</template>');
+				var templates=templatetemp2[0];
+				var templateslen=String(templates).split('\n');
+				for(var i=0;i<=templateslen.length;i++){
+					vm.$data.documentLast+='	'+templateslen[i]+'\n';
+				}
+				emm=String(vm.$data.documentLast).split('	\n	undefined\n');
+				vm.$data.documentLast=emm[0];
+				var scripttemp=nnr.split(beginDoc);
+				var scripttemp2=String(scripttemp[1]).split(endDoc);
+				var scripts=scripttemp2[0];
+				var scriptslen=String(scripts).split('\n');
+				vm.$data.documentLast+=beginHTM;
+				for(var i=0;i<=scriptslen.length;i++){
+					vm.$data.documentLast+='		'+scriptslen[i]+'\n';
+				}
+				emm=String(vm.$data.documentLast).split('		\n		undefined\n');
+				vm.$data.documentLast=emm[0];
+				vm.$data.documentLast+=endHTM;
+				var changedNr=vm.$data.documentLast;
+				fs.writeFileSync('./neiRong.txt',changedNr);
+				console.log('fs');
+				vm.$data.show=true;
+			};
+		</script>
 	</body>
 </html>

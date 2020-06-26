@@ -10,8 +10,9 @@
 		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
 		<style type="text/css">
-			div{
+			#app{
 				border-radius: 12px 12px 12px 12px;
+				box-shadow:2px 2px 5px #333333;
 				opacity:1.0;
 				background-color: white;
 			}
@@ -29,9 +30,9 @@
 			<el-collapse-transition>
 				<div v-if="show">
 					<div id="">
-						<el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
-						<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()"></el-button>
-						<!-- <el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()"></el-button> -->
+						<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
+						<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()" plain ></el-button>
+						<!-- <el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()" plain ></el-button> -->
 						<span>webPages Compiler by 7086cmd</span> 
 					</div>
 					<h2 style="text-align: center;">{{text+slh}}</h2>
@@ -79,6 +80,7 @@
 				},
 				methods:{
 					closeWindow:function(){
+						this.show=false;
 						require('electron').ipcRenderer.send('closeWindow');
 					},
 					minWindow:function(){

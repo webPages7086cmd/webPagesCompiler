@@ -11,7 +11,6 @@
 		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
 		<style type="text/css">
 			#app{
-				background-image: url(./img/index.png);
 				border-radius: 12px 12px 12px 12px;
 				box-shadow:2px 2px 5px #333333;
 				opacity:1.0;
@@ -31,13 +30,10 @@
 			<el-collapse-transition>
 				<div>
 					<div id="">
-						<br><br>
-						<h1 style="text-align: center;color:#A6B0EE">webPages Compiler</h1>
-						<!-- <el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
+						<el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
 						<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()"></el-button>
 						<el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()"></el-button>
-						<span>webPages Compiler by 7086cmd</span> -->
-						<br><br><br><br><br><br>
+						<span>webPages Compiler by 7086cmd</span> 
 					</div>
 				</div>
 			</el-collapse-transition>
@@ -51,12 +47,16 @@
 					}
 				},
 				methods:{
-					// closeWindow:function(){
-					// 	require('electron').ipcRenderer.send('closeWindow');
-					// },
-					// minWindow:function(){
-					// 	require('electron').ipcRenderer.send('minWindow');
-					// }
+					closeWindow:function(){
+						require('electron').ipcRenderer.send('closeWindow');
+					},
+					minWindow:function(){
+						require('electron').ipcRenderer.send('minWindow');
+					},
+					editMode:function(){
+						this.show=false;
+						require('electron').ipcRenderer.send('editMode');
+					},
 				}
 			});
 		</script>

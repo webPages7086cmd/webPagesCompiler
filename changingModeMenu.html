@@ -9,6 +9,7 @@
 		<script src="./js/element-ui.collapse-transition.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
+		<script src="./readfile.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			#app{
 				border-radius: 12px 12px 12px 12px;
@@ -27,11 +28,12 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="About()">
+			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="openFolder()">
 				<el-menu-item index="0">webPages Compiler</el-menu-item>
-				<el-submenu index="1">
+				<el-submenu index="1" @select="openFolder()">
 					<template slot="title">文件</template>
-					<el-menu-item index="2-1" @select="About()">关于</el-menu-item>
+					<el-menu-item index="2-1" @select="openFolder()"><el-button type="text" v-on:click="open()">打开</el-button></el-menu-item>
+					<el-menu-item index="2-2" @select="openFolder()"><el-button type="text" v-on:click="save()">保存文件</el-button></el-menu-item>
 				</el-submenu>
 			</el-menu>
 		</div>
@@ -46,8 +48,36 @@
 				methods:{
 					About:function(){
 						require('electron').ipcRenderer.send('about');
+					},
+					open:function(){
+						readfile();
+					},
+					save:function(){
+						const fs=require('fs');
+						var fileNrong=fs.readFileSync('./neiRong.txt','utf-8');
+						console.log(fileNrong);
+						const {dialog}=require('electron').remote;
+						dialog.showSaveDialog({
+							title:'保存文件',
+							filters:[
+								{
+									name:'HTML文件',
+									extensions:[
+										'html',
+										'htm'
+									]
+								}
+							]
+						}).then(result=>{
+							fs.writeFileSync(result.filePath,fileNrong);
+						});
 					}
 				}
+			});
+			var chengedNeiRong='';
+			ipcRenderer.on('change',(event,arg)=>{
+				changedNeiRong=arg;
+				vm.$data.showd=true;
 			});
 		</script>
 	</body>

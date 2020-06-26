@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>01</title>
+		<meta charset="utf-8"></meta>
+		<link type="text/css" rel="stylesheet" href=""></link>
+		<link rel="icon" href=""></link>
+		<script src="" type="text/javascript" charset="UTF-8"></script>
+		<style type="text/css">		
+			p{
+				text-align:center
+			}
+		</style>
+	</head>
+	<body>	
+		<h1>Hello, World!</h1>
+		<script type="text/javascript">		
+			var vm=new Vue({
+				el:"#app",
+				data(){
+					return{
+						
+					}
+				},
+				methods:{
+					
+				}
+			});
+		</script>
+	</body>
+</html>
