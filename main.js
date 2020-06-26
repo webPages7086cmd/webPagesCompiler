@@ -33,9 +33,9 @@ app.on('ready',()=>{
 	});
 	let menuWindow=new BrowserWindow({
 		x:0,
-		y:5,
+		y:2,
 		width:screenWidth,
-		height:parseInt((screenHeight-768)/3.2),
+		height:128,
 		movable:false,
 		resizeable:false,
 		frame:false,
@@ -154,8 +154,8 @@ app.on('ready',()=>{
 		});
 		// goWindow.close();
 		changeWindow.loadURL(path.join('file://',__dirname,'./changingMode.html'));
-		changeWindow.webContents.openDevTools();
-		menuWindow.webContents.openDevTools();
+		// changeWindow.webContents.openDevTools();
+		// menuWindow.webContents.openDevTools();
 		openingWindow.close();
 		changeWindow.on('close',()=>{
 			changeWindow=null;
@@ -184,7 +184,22 @@ app.on('ready',()=>{
 		console.log("文件内容："+arg);
 		changeWindow.webContents.send('read',arg);
 	});
-
+	let debugWindow;
+	ipcMain.on('debug',(event,arg)=>{
+		debugWindow=new BrowserWindow({
+			title:'Debug',
+			height:768,
+			width:1024,
+			movable:true,
+			resizeable:true
+		});
+		debugWindow.loadURL(path.join('file://',arg));
+		debugWindow.webContents.openDevTools();
+		console.log("debug:"+arg);
+		debugWindow.on('close',()=>{
+			debugWindow=null;
+		});
+	});
 	openingWindow.on('close',()=>{
 		openingWindow=null;
 	});

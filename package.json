@@ -1,6 +1,6 @@
 {
 	"name": "webpagescompiler",
-	"version": "0.0.1-beta.1",
+	"version": "0.0.1-beta.2",
 	"description":"none",
 	"main": "main.js",
 	"scripts": {
@@ -14,6 +14,7 @@
 		"buildlinuxia32": "electron-builder --linux --ia32",
 		"buildlinuxarm64": "electron-builder --linux --arm64",
 		"buildlinuxarmv7l": "electron-builder --linux --armv7l",
+		"buildlinux": "electron-builder --linux",
 		"buildwin": "electron-builder --win"
 	},
 	"build": {

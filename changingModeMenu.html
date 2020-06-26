@@ -34,6 +34,7 @@
 					<template slot="title">文件</template>
 					<el-menu-item index="2-1" @select="openFolder()"><el-button type="text" v-on:click="open()">打开</el-button></el-menu-item>
 					<el-menu-item index="2-2" @select="openFolder()"><el-button type="text" v-on:click="save()">保存文件</el-button></el-menu-item>
+					<el-menu-item index="2-3" @select="openFolder()"><el-button type="text" v-on:click="debug()">调试</el-button></el-menu-item>
 				</el-submenu>
 			</el-menu>
 		</div>
@@ -42,7 +43,8 @@
 				el:"#app",
 				data(){
 					return{
-						activeIndex: '1'
+						activeIndex: '1',
+						filePath: ''
 					}
 				},
 				methods:{
@@ -69,8 +71,17 @@
 								}
 							]
 						}).then(result=>{
+							this.filePath=result.filePath;
 							fs.writeFileSync(result.filePath,fileNrong);
 						});
+					},
+					debug:function(){
+						if(this.filePath==''){
+							this.$alert.error('您没有保存文件，因此无法调试','提示');
+						}
+						else{
+							require('electron').ipcRenderer.send('debug',this.filePath);
+						}
 					}
 				}
 			});
