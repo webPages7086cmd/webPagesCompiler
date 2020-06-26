@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>01</title>
-		<meta charset="utf-8"></meta>
-		<link type="text/css" rel="stylesheet" href=""></link>
-		<link rel="icon" href=""></link>
-		<script src="" type="text/javascript" charset="UTF-8"></script>
+		<title>Hello, World!</title>
+		<meta>charset="utf-8"</meta>
+		<script src="https://unpkg.com/vue@2.6.11/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">		
-			p{
-				text-align:center
+			h1{
+				font-size:36px;
 			}
 		</style>
 	</head>
 	<body>	
-		<h1>Hello, World!</h1>
+		<div id="#app">
+			<h1 style="text-align: center">Hello, World!</h1>
+		</div>
 		<script type="text/javascript">		
 			var vm=new Vue({
 				el:"#app",

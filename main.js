@@ -154,8 +154,8 @@ app.on('ready',()=>{
 		});
 		// goWindow.close();
 		changeWindow.loadURL(path.join('file://',__dirname,'./changingMode.html'));
-		// changeWindow.webContents.openDevTools();
-		// menuWindow.webContents.openDevTools();
+		changeWindow.webContents.openDevTools();
+		menuWindow.webContents.openDevTools();
 		openingWindow.close();
 		changeWindow.on('close',()=>{
 			changeWindow=null;
