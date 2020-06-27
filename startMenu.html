@@ -27,11 +27,12 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="About()">
+			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
 				<el-menu-item index="0">webPages Compiler</el-menu-item>
 				<el-submenu index="1">
 					<template slot="title">文件</template>
-					<el-menu-item index="2-1" @select="About()">关于</el-menu-item>
+					<el-menu-item index="2-1"><el-button type="text" v-on:click="About()">关于</el-button></el-menu-item>
+					<el-menu-item index="2-2"><el-button type="text" v-on:click="Document()">文档</el-button></el-menu-item>
 				</el-submenu>
 			</el-menu>
 		</div>
@@ -46,6 +47,9 @@
 				methods:{
 					About:function(){
 						require('electron').ipcRenderer.send('about');
+					},
+					Document:function(){
+						require('electron').ipcRenderer.send('document');
 					}
 				}
 			});

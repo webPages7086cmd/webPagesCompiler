@@ -28,15 +28,17 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="openFolder()">
-				<el-menu-item index="0">webPages Compiler</el-menu-item>
-				<el-submenu index="1" @select="openFolder()">
-					<template slot="title">文件</template>
-					<el-menu-item index="2-1" @select="openFolder()"><el-button type="text" v-on:click="open()">打开</el-button></el-menu-item>
-					<el-menu-item index="2-2" @select="openFolder()"><el-button type="text" v-on:click="save()">保存文件</el-button></el-menu-item>
-					<el-menu-item index="2-3" @select="openFolder()"><el-button type="text" v-on:click="debug()">调试</el-button></el-menu-item>
-				</el-submenu>
+			<transition appear name="el-zoom-in-center">
+				<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="openFolder()">
+					<el-menu-item index="0">webPages Compiler</el-menu-item>
+					<el-submenu index="1" @select="openFolder()">
+						<template slot="title">文件</template>
+						<el-menu-item index="2-1" @select="openFolder()"><el-button type="text" v-on:click="open()">打开</el-button></el-menu-item>
+						<el-menu-item index="2-2" @select="openFolder()"><el-button type="text" v-on:click="save()">保存文件</el-button></el-menu-item>
+						<el-menu-item index="2-3" @select="openFolder()"><el-button type="text" v-on:click="debug()">调试</el-button></el-menu-item>
+					</el-submenu>
 			</el-menu>
+			</transition>
 		</div>
 		<script type="text/javascript">
 			var vm=new Vue({

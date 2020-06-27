@@ -32,7 +32,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-collapse-transition>
+			<transition name="el-fade-in" appear >
 				<div>
 					<div id="">
 						<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
@@ -60,7 +60,7 @@
 					</el-row>
 				</div>
 				<br><br>
-			</el-collapse-transition>
+			</transition>
 		</div>
 		<script type="text/javascript">
 			var vm=new Vue({

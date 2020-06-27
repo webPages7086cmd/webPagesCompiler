@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<div id="app" class="bd">
-			<el-collapase-transition>
+			<transition appear name="el-zoom-in-top">
 				<div id="x" v-if="show">
 					<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
 					<!-- <el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()"></el-button> -->
@@ -37,7 +37,7 @@
 						<p style="text-align: right;">Copyright &copy; 2020 7086cmd</p>
 					</div>
 				</div>
-			</el-collapase-transition>
+			</transition>
 		</div>
 		<script type="text/javascript">
 			var vm=new Vue({

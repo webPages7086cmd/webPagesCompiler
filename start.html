@@ -27,7 +27,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-collapse-transition>
+			<transition appear name="el-fade-in-linear">
 				<div v-if="show">
 					<div id="">
 						<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
@@ -64,7 +64,7 @@
 					</div>
 					<br>
 				</div>
-			</el-collapse-transition>
+			</transition>
 		</div>
 		<script type="text/javascript">
 			var vm=new Vue({

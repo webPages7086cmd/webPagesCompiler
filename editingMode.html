@@ -31,7 +31,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-collapse-transition>
+			<transition name=".el-zoom-in-bottom" appear >
 				<div>
 					<div id="">
 						<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
@@ -42,8 +42,7 @@
 					<h1 style="text-align: center;">抱歉，Edit Mode暂未开启。</h1>
 					<br><br><br><br>
 				</div><br><br><br><br>
-
-			</el-collapse-transition>
+			</transition>
 		</div>
 		<script type="text/javascript">
 			var vm=new Vue({

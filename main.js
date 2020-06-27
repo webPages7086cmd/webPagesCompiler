@@ -154,8 +154,8 @@ app.on('ready',()=>{
 		});
 		// goWindow.close();
 		changeWindow.loadURL(path.join('file://',__dirname,'./changingMode.html'));
-		changeWindow.webContents.openDevTools();
-		menuWindow.webContents.openDevTools();
+		// changeWindow.webContents.openDevTools();
+		// menuWindow.webContents.openDevTools();
 		openingWindow.close();
 		changeWindow.on('close',()=>{
 			changeWindow=null;
@@ -178,6 +178,38 @@ app.on('ready',()=>{
 		}
 		else{
 			changeWindow.maximize();
+		}
+	});
+	let documentWindow;
+	ipcMain.on('document',()=>{
+		documentWindow=new BrowserWindow({
+			width:1920,
+			height:1080,
+			frame:false,
+			resizeable:true,
+			movable:true,
+			// transparent:true,
+			webPreferences:{
+				nodeIntegration:true
+			}
+		});
+		documentWindow.loadURL(path.join('file://',__dirname,'./document.html'));
+		documentWindow.on('close',()=>{
+			documentWindow=null;
+		});
+	});
+	ipcMain.on('closeDocumentWindow',()=>{
+		documentWindow.close();
+	});
+	ipcMain.on('minDocumentWindow',()=>{
+		documentWindow.minimize();
+	});
+	ipcMain.on('maxDocumentWindow',()=>{
+		if(documentWindow.isMaximized()){
+			documentWindow.unmaximize();
+		}
+		else{
+			documentWindow.maximize();
 		}
 	});
 	ipcMain.on('openFile',(event,arg)=>{

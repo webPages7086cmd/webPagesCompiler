@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>webPages Compiler</title>
+		<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/element-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.min.css"/>
+		<script src="./js/element-ui.collapse-transition.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="./css/element-ui.transitions.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/prism.css"/>
+		<script src="./js/prism.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./sendmsg.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body{
+				font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+				background-color:rgba(0, 0, 0, 0.0);  
+			}
+			.czbtn{
+				width:8px;
+				height:8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<transition name="el-fade-in" appear >
+				<div id="">
+					<el-button type="danger" size="mini" circle v-on:click="closeWindow()" plain ><i class="el-icon-close"></i></el-button>
+					<el-button type="warning" icon="el-icon-minus" size="mini" circle v-on:click="minWindow()" plain ></el-button>
+					<el-button type="success" icon="el-icon-plus" size="mini" circle v-on:click="maxWindow()" plain ></el-button>
+					<span>webPages Compiler by 7086cmd</span> 
+				</div>
+				<iframe frameborder="no" src="https://webPages7086cmd.github.io"></iframe>
+			</transition>
+		</div>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:"#app",
+				data(){
+					return{
+						
+					}
+				},
+				methods:{
+					closeWindow:function(){
+						require('electron').ipcRenderer.send('closeDocumentWindow');
+					},
+					minWindow:function(){
+						require('electron').ipcRenderer.send('minDocumentWindow');
+					},
+					maxWindow:function(){
+						require('electron').ipcRenderer.send('maxEditWindow');
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

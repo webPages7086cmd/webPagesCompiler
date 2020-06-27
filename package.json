@@ -1,6 +1,6 @@
 {
 	"name": "webpagescompiler",
-	"version": "0.0.1-beta.3",
+	"version": "0.0.1",
 	"description":"none",
 	"main": "main.js",
 	"scripts": {
