@@ -27,7 +27,7 @@
 	</head>
 	<body>
 		<div id="app">
-			<el-collapse-transition>
+			<transition name="el-fade-in" appear >
 				<div>
 					<div id="">
 						<el-button type="danger" size="mini" circle v-on:click="closeWindow()"><i class="el-icon-close"></i></el-button>
@@ -36,7 +36,7 @@
 						<span>webPages Compiler by 7086cmd</span> 
 					</div>
 				</div>
-			</el-collapse-transition>
+			</transition>
 		</div>
 		<script type="text/javascript">
 			var vm=new Vue({
@@ -53,10 +53,9 @@
 					minWindow:function(){
 						require('electron').ipcRenderer.send('minWindow');
 					},
-					editMode:function(){
-						this.show=false;
-						require('electron').ipcRenderer.send('editMode');
-					},
+					maxWindow:function(){
+						require('electron').ipcRenderer.send('maxWindow');
+					}
 				}
 			});
 		</script>

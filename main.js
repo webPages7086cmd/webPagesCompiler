@@ -1,16 +1,13 @@
 const {app,BrowserWindow,Menu,ipcMain,ipcRenderer,screen,dialog}=require('electron');
-// const express=require('express');
 const path=require('path');
 const fs=require('fs');
+const https=require('https');
+const querystring=require('querystring');
 app.on('ready',()=>{
 	let opa=false;
 	let screenWidth=require('electron').screen.getPrimaryDisplay().workAreaSize.width;
 	let screenHeight=require('electron').screen.getPrimaryDisplay().workAreaSize.height;
-	// let server=express();
-	// server.get('*',(req,res)=>{
-	// 	let page=fs.readFileSync(path.resolve(__dirname, './start.html'), 'utf-8')
-	// });
-	// server.listen(8080);
+
 	Menu.setApplicationMenu(null);
 	let goWindow;
 	goWindow=new BrowserWindow({
@@ -50,8 +47,8 @@ app.on('ready',()=>{
 	let openingWindow=new BrowserWindow({
 		width:1024,
 		height:768,
-		movable:true,
-		resizeable:true,
+		movable:false,
+		resizeable:false,
 		frame:false,
 		transparent:true,
 		webPreferences:{
@@ -60,7 +57,41 @@ app.on('ready',()=>{
 	});
 	// openingWindow.loadURL('http://127.0.0.1');
 	openingWindow.loadURL(path.join('file://',__dirname,'./start.html'));
-	
+	let updateWindow;
+	https.get({
+		hostname:'webpages7086cmd.github.io',
+		path:'/version.upd',
+		agent:false
+	},(res)=>{
+		var writeFile=fs.createWriteStream('./version.json',{
+			encoding:'utf-8',
+			autoClose:true
+		});
+		res.pipe(writeFile);
+		var result=fs.readFileSync('./version.json','utf-8');
+		console.log(result.toString());
+		if(result.toString()!="0.0.1"){
+			updateWindow=new BrowserWindow({
+				width:1024,
+				height:768,
+				resizeable:true,
+				movable:true,
+				frame:false,
+				transparent:true,
+				webPreferences:{
+					nodeIntegration:true
+				}
+			});
+			updateWindow.loadURL('https://webpages7086cmd.github.io/update.html');
+			updateWindow.webContents.send('update',result.latest);
+			updateWindow.on('close',()=>{
+				updateWindow=null;
+			});
+		}
+	});
+	ipcMain.on('closeUpdateWindow',()=>{
+		updateWindow.close();
+	});
 	ipcMain.on('closeWindow',()=>{
 		openingWindow.close();
 		menuWindow.close();
