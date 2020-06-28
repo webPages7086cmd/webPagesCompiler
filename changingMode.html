@@ -128,13 +128,13 @@
 				var styletemp2=String(styletemp[1]).split('</style>');
 				var styles=styletemp2[0];
 				var styleslen=String(styles).split('\n');
-				var emm=String(vm.$data.documentLast).split('	\n	undefined\n');
+				var emm=String(vm.$data.documentLast).split('undefined\n');
 				vm.$data.documentLast=emm[0];
 				vm.$data.documentLast+='		<style type="text/css">';
 				for(var i=0;i<=styleslen.length;i++){
 					vm.$data.documentLast+='		'+styleslen[i]+'\n';
 				}
-				emm=String(vm.$data.documentLast).split('		\n		undefined\n');
+				emm=String(vm.$data.documentLast).split('undefined\n');
 				vm.$data.documentLast=emm[0];
 				vm.$data.documentLast+='		</style>\n	</head>\n	<body>';
 				var templatetemp=nnr.split('<template>');
@@ -144,7 +144,7 @@
 				for(var i=0;i<=templateslen.length;i++){
 					vm.$data.documentLast+='	'+templateslen[i]+'\n';
 				}
-				emm=String(vm.$data.documentLast).split('	\n	undefined\n');
+				emm=String(vm.$data.documentLast).split('undefined\n');
 				vm.$data.documentLast=emm[0];
 				var scripttemp=nnr.split(beginDoc);
 				var scripttemp2=String(scripttemp[1]).split(endDoc);
@@ -154,7 +154,7 @@
 				for(var i=0;i<=scriptslen.length;i++){
 					vm.$data.documentLast+='		'+scriptslen[i]+'\n';
 				}
-				emm=String(vm.$data.documentLast).split('		\n		undefined\n');
+				emm=String(vm.$data.documentLast).split('undefined\n');
 				vm.$data.documentLast=emm[0];
 				vm.$data.documentLast+=endHTM;
 				var changedNr=vm.$data.documentLast;
