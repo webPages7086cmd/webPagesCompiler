@@ -3,29 +3,21 @@
 	<head>
 		<title>Hello, World!</title>
 		<meta charset="utf-8"></meta>
-		<script src="https://unpkg.com/vue@2.6.11/dist/vue.js" type="text/javascript" charset="utf-8"></script>
-		<style type="text/css">		
-			h1{
-				font-size:36px;
+	
+			<style type="text/css">		
+			.center{
+				text-align: center;
 			}
-		</style>
+		
+				</style>
 	</head>
 	<body>	
-		<div id="#app">
-			<h1 style="text-align: center">Hello, World!</h1>
-		</div>
-		<script type="text/javascript">		
-			var vm=new Vue({
-				el:"#app",
-				data(){
-					return{
-						
-					}
-				},
-				methods:{
-					
-				}
-			});
+		<h1>Hello, World!</h1>
+	
+	<script type="text/javascript">		
+			console.log('Hello, World!');
+		
+		
 		</script>
 	</body>
 </html>

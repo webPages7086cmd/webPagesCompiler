@@ -92,14 +92,6 @@
 			var neiRong=null;
 			const fs=require('fs');
 			const {ipcRenderer}=require('electron');
-			const beginDoc=fs.readFileSync('./begin.txt','utf-8');
-			const beginHTM=fs.readFileSync('./begin2.txt','utf-8');
-			const endDoc=fs.readFileSync('./end2.txt','utf-8');
-			const endHTM=fs.readFileSync('./end.txt','utf-8');
-			console.log(beginDoc);
-			console.log(beginHTM);
-			console.log(endDoc);
-			console.log(endHTM);
 			ipcRenderer.on('read',(event,args)=>{
 				vm.$data.fileNr=args;
 				neiRong=args;
@@ -121,7 +113,7 @@
 				var nnr=vm.$data.fileNr;
 				var sets=nnr.split('</set>');
 				var setslen=String(sets[0]).split('\n');
-				for(var i=2;i<=setslen.length;i++){
+				for(var i=3;i<=setslen.length;i++){
 					vm.$data.documentLast+='	'+setslen[i]+'\n';
 				}
 				var styletemp=nnr.split('<style>');
@@ -146,17 +138,21 @@
 				}
 				emm=String(vm.$data.documentLast).split('undefined\n');
 				vm.$data.documentLast=emm[0];
-				var scripttemp=nnr.split(beginDoc);
-				var scripttemp2=String(scripttemp[1]).split(endDoc);
+				var bgn='<'+'script'+'>';
+				var scripttemp=nnr.split(bgn);
+				var en='<'+'/'+'script'+'>';
+				var scripttemp2=String(scripttemp[1]).split(en);
 				var scripts=scripttemp2[0];
 				var scriptslen=String(scripts).split('\n');
-				vm.$data.documentLast+=beginHTM;
+				var beg='<'+'script type="text/javascript"'+'>';
+				vm.$data.documentLast+=beg;
 				for(var i=0;i<=scriptslen.length;i++){
 					vm.$data.documentLast+='		'+scriptslen[i]+'\n';
 				}
 				emm=String(vm.$data.documentLast).split('undefined\n');
 				vm.$data.documentLast=emm[0];
-				vm.$data.documentLast+=endHTM;
+				var endd='\n		<'+'/script'+'>\n	<'+'/body'+'>\n<'+'/html'+'>';
+				vm.$data.documentLast+=endd;
 				var changedNr=vm.$data.documentLast;
 				fs.writeFileSync('./neiRong.txt',changedNr);
 				console.log('fs');

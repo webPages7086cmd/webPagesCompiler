@@ -70,7 +70,7 @@ app.on('ready',()=>{
 		res.pipe(writeFile);
 		var result=fs.readFileSync('./version.json','utf-8');
 		console.log(result.toString());
-		if(result.toString()!="0.0.1"){
+		if(result.toString()!="0.0.2"){
 			updateWindow=new BrowserWindow({
 				width:1024,
 				height:768,
