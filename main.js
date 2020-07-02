@@ -1,13 +1,16 @@
 const {app,BrowserWindow,Menu,ipcMain,ipcRenderer,screen,dialog}=require('electron');
 const path=require('path');
 const fs=require('fs');
+const express=require('express');
+const http=require('http');
 const https=require('https');
-const querystring=require('querystring');
+const extend=require('extend');
+const request=require('request');
+var expressApplication=express();
 app.on('ready',()=>{
 	let opa=false;
 	let screenWidth=require('electron').screen.getPrimaryDisplay().workAreaSize.width;
 	let screenHeight=require('electron').screen.getPrimaryDisplay().workAreaSize.height;
-
 	Menu.setApplicationMenu(null);
 	let goWindow;
 	goWindow=new BrowserWindow({
@@ -42,8 +45,6 @@ app.on('ready',()=>{
 		}
 	});
 	menuWindow.loadURL(path.join('file://',__dirname,'./startMenu.html'));
-	// menuWindow.maximize();
-	// menuWindow.unmaximize();
 	let openingWindow=new BrowserWindow({
 		width:1024,
 		height:768,
@@ -55,42 +56,48 @@ app.on('ready',()=>{
 			nodeIntegration:true
 		}
 	});
-	// openingWindow.loadURL('http://127.0.0.1');
 	openingWindow.loadURL(path.join('file://',__dirname,'./start.html'));
-	let updateWindow;
-	https.get({
-		hostname:'webpages7086cmd.github.io',
-		path:'/version.upd',
-		agent:false
-	},(res)=>{
-		var writeFile=fs.createWriteStream('./version.json',{
-			encoding:'utf-8',
-			autoClose:true
-		});
-		res.pipe(writeFile);
-		var result=fs.readFileSync('./version.json','utf-8');
-		console.log(result.toString());
-		if(result.toString()!="0.0.2"){
-			updateWindow=new BrowserWindow({
-				width:1024,
-				height:768,
-				resizeable:true,
-				movable:true,
-				frame:false,
-				transparent:true,
-				webPreferences:{
-					nodeIntegration:true
+	request('https://webpages7086cmd.github.io/version.upd',(error,response,body)=>{
+		if(body!=='0.0.2'){
+			console.log('new Version:'+String(body));
+			request('https://webpages7086cmd.github.io/update.html',(errors,reponses,bodys)=>{
+				try{
+					expressApplication.get('/',(response,request)=>{
+					   res.send(bodys);
+					});
+					var server=app.listen(8888,()=>{
+						var host=server.address().address;
+						var port=server.address().port;
+						console.log('Server running at http://'+host+':'+port+'/');
+					});
 				}
-			});
-			updateWindow.loadURL('https://webpages7086cmd.github.io/update.html');
-			updateWindow.webContents.send('update',result.latest);
-			updateWindow.on('close',()=>{
-				updateWindow=null;
+				catch(error){
+					http.createServer((request,response)=>{
+						response.writeHead(200,{
+							'Content-Type':'text/html'
+						});
+						response.end(bodys);
+					}).listen(8888);
+					console.log('Server running at http://127.0.0.1:8888/');
+				}
+				let updateWindow=new BrowserWindow({
+					width:1024,
+					height:768,
+					movable:true,
+					resizeable:true,
+					webPreferences:{
+						nodeIntegration:true
+					}
+				});
+				updateWindow.loadURL('http://127.0.0.1:8888');
+				updateWindow.on('close',()=>{
+					updateWindow=null;
+				});
 			});
 		}
-	});
-	ipcMain.on('closeUpdateWindow',()=>{
-		updateWindow.close();
+		else{
+			console.log('latest version');
+		}
 	});
 	ipcMain.on('closeWindow',()=>{
 		openingWindow.close();
@@ -109,7 +116,6 @@ app.on('ready',()=>{
 	});
 	let aboutWindow;
 	ipcMain.on('about',()=>{
-		// goWindow.close();
 		if(opa==false){
 			opa=true;
 			aboutWindow=new BrowserWindow({
@@ -183,7 +189,6 @@ app.on('ready',()=>{
 				nodeIntegration:true
 			}
 		});
-		// goWindow.close();
 		changeWindow.loadURL(path.join('file://',__dirname,'./changingMode.html'));
 		// changeWindow.webContents.openDevTools();
 		// menuWindow.webContents.openDevTools();
