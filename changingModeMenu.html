@@ -46,7 +46,8 @@
 				data(){
 					return{
 						activeIndex: '1',
-						filePath: ''
+						filePath:'',
+						fileContent:''
 					}
 				},
 				methods:{
@@ -58,8 +59,8 @@
 					},
 					save:function(){
 						const fs=require('fs');
-						var fileNrong=fs.readFileSync('./neiRong.txt','utf-8');
-						console.log(fileNrong);
+						// var fileNrong=fs.readFileSync('./neiRong.txt','utf-8');
+						// console.log(fileNrong);
 						const {dialog}=require('electron').remote;
 						dialog.showSaveDialog({
 							title:'保存文件',
@@ -74,7 +75,7 @@
 							]
 						}).then(result=>{
 							this.filePath=result.filePath;
-							fs.writeFileSync(result.filePath,fileNrong);
+							fs.writeFileSync(result.filePath,this.fileContent);
 						});
 					},
 					debug:function(){
@@ -87,10 +88,15 @@
 					}
 				}
 			});
+			const {ipcRenderer}=require('electron');
 			var chengedNeiRong='';
 			ipcRenderer.on('change',(event,arg)=>{
 				changedNeiRong=arg;
 				vm.$data.showd=true;
+			});
+			ipcRenderer.on('content',(event,arg)=>{
+				console.log(arg);
+				vm.$data.fileContent=String(arg);
 			});
 		</script>
 	</body>

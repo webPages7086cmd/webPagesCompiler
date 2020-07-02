@@ -59,7 +59,7 @@ app.on('ready',()=>{
 	openingWindow.loadURL(path.join('file://',__dirname,'./start.html'));
 	request('https://webpages7086cmd.github.io/version.upd',(error,response,body)=>{
 		if(body!=='0.0.2'){
-			console.log('new Version:'+String(body));
+			// console.log('new Version:'+String(body));
 			request('https://webpages7086cmd.github.io/update.html',(errors,reponses,bodys)=>{
 				try{
 					expressApplication.get('/',(response,request)=>{
@@ -68,7 +68,7 @@ app.on('ready',()=>{
 					var server=app.listen(8888,()=>{
 						var host=server.address().address;
 						var port=server.address().port;
-						console.log('Server running at http://'+host+':'+port+'/');
+						// console.log('Server running at http://'+host+':'+port+'/');
 					});
 				}
 				catch(error){
@@ -78,7 +78,7 @@ app.on('ready',()=>{
 						});
 						response.end(bodys);
 					}).listen(8888);
-					console.log('Server running at http://127.0.0.1:8888/');
+					// console.log('Server running at http://127.0.0.1:8888/');
 				}
 				let updateWindow=new BrowserWindow({
 					width:1024,
@@ -96,7 +96,7 @@ app.on('ready',()=>{
 			});
 		}
 		else{
-			console.log('latest version');
+			// console.log('latest version');
 		}
 	});
 	ipcMain.on('closeWindow',()=>{
@@ -197,13 +197,11 @@ app.on('ready',()=>{
 			changeWindow=null;
 		});
 	});
-	ipcMain.on('changed',(event,arg)=>{
-		console.log("\n转换后："+arg);
-		menuWindow.webContents.send('change',arg);
-		console.log('send');
-	});
+
+	
 	ipcMain.on('closeChangeWindow',()=>{
 		changeWindow.close();
+		menuWindow.close();
 	});
 	ipcMain.on('minChangeWindow',()=>{
 		changeWindow.minimize();
@@ -249,9 +247,24 @@ app.on('ready',()=>{
 		}
 	});
 	ipcMain.on('openFile',(event,arg)=>{
-		console.log("文件内容："+arg);
+		// console.log("文件内容："+arg);
 		changeWindow.webContents.send('read',arg);
 	});
+	ipcMain.on('docContent',(event,arg)=>{
+		// console.log(event);
+		// console.log('Changed:'+arg);
+		menuWindow.webContents.send('content',arg);
+		// console.log('send');
+	});
+	ipcMain.on('changed',(event,arg)=>{
+		// console.log(event);
+		// console.log("\n转换后："+arg);
+		menuWindow.webContents.send('change',arg);
+		// console.log('send');
+	});
+	ipcMain.on('hel',(event,arg)=>{
+		// console.log(event+'\n'+arg);
+	})
 	let debugWindow;
 	ipcMain.on('debug',(event,arg)=>{
 		debugWindow=new BrowserWindow({
@@ -263,7 +276,7 @@ app.on('ready',()=>{
 		});
 		debugWindow.loadURL(path.join('file://',arg));
 		debugWindow.webContents.openDevTools();
-		console.log("debug:"+arg);
+		// console.log("debug:"+arg);
 		debugWindow.on('close',()=>{
 			debugWindow=null;
 		});
