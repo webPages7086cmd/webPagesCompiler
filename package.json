@@ -17,15 +17,15 @@
     "buildlinux": "electron-builder --linux",
     "buildwin": "electron-builder --win",
     "buildall": "electron-builder --mwl",
-    "pack_win32_ia32": "electron-packager ./ webPagesCompiler --platform=win32 arch=ia32 --electron-version 8.2.1 --overwrite --icon=./icon.ico --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)'",
-    "pack_win32_x64": "electron-packager ./ webPagesCompiler --platform=win32 arch=x64 --electron-version 8.2.1 --overwrite --icon=./icon.ico --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)'",
-    "pack_win32_arm64": "electron-packager ./ webPagesCompiler --platform=win32 arch=arm64 --electron-version 8.2.1 --overwrite --icon=./icon.ico --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)'",
-    "pack_darwin_x64": "electron-packager ./ webPagesCompiler --platform=darwin arch=x64 --electron-version 8.2.1 --overwrite --icon=./icon.icns --asar--extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)",
-    "pack_mas_x64": "electron-packager ./ webPagesCompiler --platform=mas arch=x64 --electron-version 8.2.1 --overwrite --icon=./icon.icns --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)",
-    "pack_linux_x64": "electron-packager ./ webPagesCompiler --platform=linux arch=x64 --electron-version 8.2.1 --overwrite --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)",
-    "pack_linux_arm64": "electron-packager ./ webPagesCompiler --platform=linux arch=arm64 --electron-version 8.2.1 --overwrite --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)",
-    "pack_linux_ia32": "electron-packager ./ webPagesCompiler --platform=linux arch=ia32 --electron-version 8.2.1 --overwrite --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)",
-    "pack_linux_armv7l": "electron-packager ./ webPagesCompiler --platform=linux arch=armv7l --electron-version 8.2.1 --overwrite --asar --extra-resource='(./begin.txt|./begin2.txt|./end.txt|./end2.txt|./version.json|./neiRong.txt)"
+    "pack_win32_ia32": "electron-packager ./ webPagesCompiler --platform=win32 arch=ia32 --electron-version 8.2.1 --overwrite --icon=./icon.ico --asar'",
+    "pack_win32_x64": "electron-packager ./ webPagesCompiler --platform=win32 arch=x64 --electron-version 8.2.1 --overwrite --icon=./icon.ico --asar'",
+    "pack_win32_arm64": "electron-packager ./ webPagesCompiler --platform=win32 arch=arm64 --electron-version 8.2.1 --overwrite --icon=./icon.ico --asar'",
+    "pack_darwin_x64": "electron-packager ./ webPagesCompiler --platform=darwin arch=x64 --electron-version 8.2.1 --overwrite --icon=./icon.icns --asar",
+    "pack_mas_x64": "electron-packager ./ webPagesCompiler --platform=mas arch=x64 --electron-version 8.2.1 --overwrite --icon=./icon.icns --asar",
+    "pack_linux_x64": "electron-packager ./ webPagesCompiler --platform=linux arch=x64 --electron-version 8.2.1 --overwrite --asar",
+    "pack_linux_arm64": "electron-packager ./ webPagesCompiler --platform=linux arch=arm64 --electron-version 8.2.1 --overwrite --asar",
+    "pack_linux_ia32": "electron-packager ./ webPagesCompiler --platform=linux arch=ia32 --electron-version 8.2.1 --overwrite --asar",
+    "pack_linux_armv7l": "electron-packager ./ webPagesCompiler --platform=linux arch=armv7l --electron-version 8.2.1 --overwrite --asar"
   },
   "build": {
     "productName": "webPagesCompiler",
@@ -35,7 +35,7 @@
       "icon": "./icon.ico",
       "target": [
         {
-          "target": "msi",
+          "target": "nsis",
           "arch": [
             "ia32",
             "x64",
